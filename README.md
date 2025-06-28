@@ -29,27 +29,27 @@ Update the system one spin at a time using probabilistic rules that obey detaile
 This simulates thermal fluctuations: a spin flips if it lowers the energy, or sometimes if it raises it — modeling entropy-driven disorder at finite temperatures.
 🔁 Algorithm Steps:
 
-    Choose a random spin Si,jSi,j​.
+  Choose a random spin Si,jSi,j​.
 
-    Compute energy change ΔEΔE if the spin is flipped.
+   Compute energy change ΔEΔE if the spin is flipped.
 
-    If ΔE≤0ΔE≤0, accept the flip.
+  If ΔE≤0ΔE≤0, accept the flip.
 
-    If ΔE>0ΔE>0, accept with probability:
-    P=exp⁡(−ΔEkBT)
-    P=exp(−kB​TΔE​)
+   If ΔE>0ΔE>0, accept with probability:
+   P=exp⁡(−ΔEkBT)
+   P=exp(−kB​TΔE​)
 
-    Repeat this L² times per sweep (each sweep ≈ 1 Monte Carlo step).
+   Repeat this L² times per sweep (each sweep ≈ 1 Monte Carlo step).
 
 🟡 Pros:
 
-    Simple to implement.
+  Simple to implement.
 
-    Works well far from criticality.
+  Works well far from criticality.
 
 🔴 Cons:
 
-    Critical slowing down near TcTc​: correlations grow, but the spin updates are too local and slow to reflect large-scale fluctuations.
+  Critical slowing down near TcTc​: correlations grow, but the spin updates are too local and slow to reflect large-scale fluctuations.
 
 2. 🔵 Wolff Algorithm (Single Cluster Flip)
 📌 Idea:
@@ -63,8 +63,8 @@ At TcTc​, spins form large correlated domains. Flipping whole domains mimics t
     Choose a random seed spin.
 
     Grow a cluster of same-spin neighbors by adding each with probability:
-    Padd=1−e−2J/kBT
-    Padd​=1−e−2J/kB​T
+    P_add=1−exp(−2J/kBT)
+    P_add​=1−exp(−2J/kB​T)
 
     Use a stack/queue to recursively explore the neighbors.
 
@@ -93,8 +93,8 @@ Decomposes the spin system into independent clusters using Fortuin–Kasteleyn r
     For each pair of neighboring spins:
 
         If they are aligned: form a bond with probability
-        Pbond=1−e−2J/kBT
-        Pbond​=1−e−2J/kB​T
+        P_bond=1−exp(−2J/kBT)
+        P_bond​=1−exp(−2J/kBT)
 
     Identify connected components (clusters).
 
